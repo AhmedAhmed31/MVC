@@ -9,14 +9,16 @@ class app
     public function __construct()
     {
         $url = $this->parseUrl();
-
+        if($url === null || !isset($url[0])) {
+            $url = ['home']; # home controlloer is the default
+        }
 
         if (file_exists('../app/controllers' . $url[0] . '.php')) {
             $this->controller = $url[0];
             unset($url[0]);
 
         }
-        require_once 'C:\xampp\htdocs\MVC\app\controllers/' . $this->controller . '.php';
+        require_once APP_PATH.DS.'controllers'. DS. $this->controller . '.php';
 
         $this->controller = new $this->controller;
 
